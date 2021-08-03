@@ -1,2 +1,5 @@
 # blog-infrastruture
-Backebd infrastructure of a simple blog web application 
+Backens infrastructure of a simple blog web application:
+
+
+
