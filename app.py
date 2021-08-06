@@ -1,11 +1,11 @@
-from flask import Flask 
+from flask import Flask, render_template
+from posts import post_list
 
 app = Flask(__name__)
 
 @app.route("/")
-def hello_word():
-    return "<h1>Blog infra structure</h1>"
-
+def home_page():
+    return render_template('home.html',post_list = post_list)
 
 @app.route("/login")
 def login(user, password):
@@ -15,3 +15,4 @@ def login(user, password):
 
 if __name__ == '__main__':   
     app.run(debug= True)
+
