@@ -69,16 +69,16 @@ body {
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
-  -ms-flex: 40%; /* IE10 */
-  flex: 40%;
+  -ms-flex: 35%; /* IE10 */
+  flex: 35%;
   background-color: #f1f1f1;
   padding: 20px;
 }
 
 /* Main column */
 .main {   
-  -ms-flex: 60%; /* IE10 */
-  flex: 60%;
+  -ms-flex: 65%; /* IE10 */
+  flex: 65%;
   background-color: white;
   padding: 20px;
 }
@@ -98,10 +98,9 @@ body {
 }
 
 .post-img{
- 
-  max-height: 100%;
+  height: 100%;
   object-fit: contain;
-
+  box-sizing: inherit;
 }
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
