@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link  rel="stylesheet" href="../static/css/home.css"  >
+<link rel="stylesheet" href="../static/css/login.css" >
 
 </head>
 <body>
@@ -39,7 +40,25 @@
 
 <div class="footer">
   <h2>Footer</h2>
-</div>
 
+  <button class="open-button" onclick="openForm()">Open Form</button>
+  <div class="form-popup" id="myForm">
+    <form action="{{url_for(autenticar)}}" class="form-container" method="POST">
+      <h1>Login</h1>
+  
+      <label for="email"><b>Usuário</b></label>
+      <input type="text" placeholder="Digite Usuário" name="email" required>
+  
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+  
+      <button type="submit" class="btn">Login</button>
+      <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+
+    </form>
+  </div> 
+
+</div>
+<script type="text/javascript" src="../static/java_script/Popupform.js"></script>
 </body>
 </html>
