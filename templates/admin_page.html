@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link  rel="stylesheet" href="../static/css/home.css"  >
+
+</head>
+<body>
+    <button type="button">Novo Post</button>
+<div class="main">
+    {% for post in post_list %}
+    <h2>{{ post.titulo }}</h2>
+    <h5>Data da postagem: {{ post.data }}</h5>
+    <button type="button">Editar</button>
+    <button type="button">Excluir</button>
+    <div class="fakeimg" style="height:200px;">
+      <img class="post-img" src="{{ post.imagem }}">
+    </div>
+    <p>Alguma coisa...</p>
+    <p>{{ post.texto }}</p>
+    <br>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

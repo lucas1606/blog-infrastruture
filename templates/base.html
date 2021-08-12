@@ -43,11 +43,11 @@
 
   <button class="open-button" onclick="openForm()">Open Form</button>
   <div class="form-popup" id="myForm">
-    <form action="{{url_for(autenticar)}}" class="form-container" method="POST">
+    <form action="{{url_for('login')}} "class="form-container" method="POST" enctype="multipart/form-data">
       <h1>Login</h1>
   
-      <label for="email"><b>Usuário</b></label>
-      <input type="text" placeholder="Digite Usuário" name="email" required>
+      <label for="user"><b>Usuário</b></label>
+      <input type="text" placeholder="Digite Usuário" name="user" required>
   
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required>
