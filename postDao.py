@@ -1,56 +1,43 @@
 from datetime import datetime
 import dbinit
 
-SQL_CREATE_DB = "CREATE DATABASE blog;"
-
-SQL_CREATE_TABLE = '''
-            CREATE TABLE post(
-                id SERIAL PRIMARY KEY,
-                data DATE DEFAULT CURRENT_DATE,
-                titulo VARCHAR(100) NOT NULL,
-                texto TEXT,
-                imagem VARCHAR(100));
-                '''
-SQL_INSERT_POST = ''' INSERT INTO post(titulo, texto, imagem)
-                    VALUES({},{},{});
-                    '''
-
+SQL_INSERT_POST = "INSERT INTO post(titulo, texto, imagem) VALUES('{}', '{}', '{}');"
+                 
 SQL_DELETE_POST = "DELETE FROM post WHERE id = {};"
 
 SQL_SELECT_POST_BY_ID = "SELECT * FROM post WHERE id = {};"
 
+SQL_SELECT_POSTS = "SELECT * FROM post;"
+
 SQL_UPDATE_POST = '''UPDATE post SET
-                     titulo = {},
-                     texto = {},
-                     imagem = {},
+                     titulo = '{}',
+                     texto = '{}',
+                     imagem = '{}',
                      WHERE id = {};
                      '''
+
 
 today = datetime.today().strftime('%d/%m/%Y')
 connection = dbinit.execute_db
 
-
 class PostDao:
 
-    data = today
-    def __init__(self, titulo, texto, imagem):
-        self.titulo = titulo
-        self.texto = texto
-        self.imagem= imagem
-
-    def imprime_tudo(self):
-        print(self.titulo,
-        self.texto,
-        self.data,
-        self.imagem)
-
-    def insert_post(self):
-        connection(SQL_INSERT_POST.format(self.titulo, self.texto, self.imagem))
+    def insert_post(self,titulo, texto, imagem):
+        connection(SQL_INSERT_POST.format(titulo, texto, imagem))
     
-    def edit_post(self, id):
-        connection(SQL_UPDATE_POST.format(self.titulo, self.texto, self.imagem ,id))
+    def edit_post(self,titulo, texto, imagem, id):
+        connection(SQL_UPDATE_POST.format(titulo, texto, imagem ,id))  
     
-    def delete_post(self, id):
+    def delete_post(self,id):
         connection(SQL_DELETE_POST.format(id))
+    
+    def select_post_by_id(self,id):
+        return list(connection(SQL_SELECT_POST_BY_ID.format(id), 1))
 
-        
+    def select_posts(self,n_posts):
+        return list(connection(SQL_SELECT_POSTS, query_posts = n_posts))
+
+try:
+    dbinit.check_if_db_exists()
+finally:
+    pass
