@@ -29,7 +29,11 @@ class PostDao:
         connection(SQL_UPDATE_POST.format(titulo, texto, imagem ,id))  
     
     def delete_post(self,id):
-        connection(SQL_DELETE_POST.format(id))
+        try:
+            connection(SQL_DELETE_POST.format(id))
+            return 'Post {} excluido com sucesso'.format(id)
+        except:
+            return 'Ocorreu um erro ao deletar o post {}'.format(id)
     
     def select_post_by_id(self,id):
         return list(connection(SQL_SELECT_POST_BY_ID.format(id), 1))

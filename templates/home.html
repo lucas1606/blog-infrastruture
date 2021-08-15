@@ -4,9 +4,13 @@
   {% for post in post_list %}
   <h2>{{ post.titulo }}</h2>
   <h5>Data da postagem: {{ post.data }}</h5>
+  
   <div class="fakeimg" style="height:200px;">
-    <img class="post-img" src="{{ post.imagem }}">
+    <a href= "{{url_for('show_post', post_id = post.id)}}">
+      <img class="post-img" src="{{ post.imagem }}">
+    </a>
   </div>
+ 
   <p>Alguma coisa...</p>
   <p>{{ post.texto }}</p>
   <br>
