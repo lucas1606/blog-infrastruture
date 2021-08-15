@@ -33,8 +33,6 @@ def login():
     else:
         return redirect(url_for('home_page'))
 
-
-
 @app.route('/admin')
 def admin_page():
     admin_page = []
@@ -45,15 +43,19 @@ def admin_page():
 
     return render_template('admin_page.html', post_list = admin_page)
 
-@app.route('/admin/<int:post_id>', methods=['POST', 'DELETE', 'UPDATE'])
-def post_crud(post_id):
-    if request.method == 'DELETE':
+@app.route('/admin/<string:action>/<int:post_id>', methods=['POST', 'DELETE', 'UPDATE'])
+def post_crud(action ,post_id=None):
+    if action == 'DELETE':
         postDao.delete_post(post_id)
+        return redirect(url_for('admin_page'))
 
-    if request.method == 'UPDATE':
-        
-
-
+    if action == 'UPDATE':
+        post = postDao.select_post_by_id(post_id)
+        post = Post(post[1] ,post[2], post[3], post[4], post[0])
+        return render_template('post_editor.html', post = post)
+    if action == 'NEW_POST':
+@app.route('/admin/editor/')
+    def post_editor():
 
 
 if __name__ == '__main__':   
