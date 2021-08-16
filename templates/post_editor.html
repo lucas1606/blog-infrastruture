@@ -4,24 +4,36 @@
 <title>Page Title</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../static/css/post_editor.css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/post_editor.css')}}" >
 
 </head>
 <body>
+  {% if post %}
 <div class="container">
-    <form action="action_page.php" method="POST" >
-  
+
+    <form action="{{url_for('post_editor', post_id = post.id)}}" method="POST" enctype="multipart/form-data" >
       <label for="fname">Título</label>
-      <input type="text" id="fname" name="titlulo" placeholder="Título">
+      <input type="text" id="fname" name="titulo" placeholder="Título" value ="{{post.titulo}}">
       <label for="imagem">Imagem</label>
-      <input type="file" id = imagem name="imagem" accept="image/png, imagem/jpeg">
+      <input type="file" id = imagem name="imagem" accept="image/png, imagem/jpeg" required>
       <label for="subject">Texto</label>
-      <textarea id="subject" name="subject" placeholder="Texto.." style="height:200px"></textarea>
-  
+      <textarea id="subject" name="texto" placeholder="Texto.." style="height:200px"> {{post.texto}} </textarea>
       <input type="submit" value="Submit">
-  
     </form>
   </div> 
+  {%else%}
+  <div class="container">
+  <form action="{{url_for('post_editor')}}" method="POST" enctype="multipart/form-data">
+    <label for="fname">Título</label>
+    <input type="text" id="fname" name="titulo" placeholder="Título">
+    <label for="imagem">Imagem</label>
+    <input type="file" id = imagem name="imagem" accept="image/png, imagem/jpeg" required>
+    <label for="subject">Texto</label>
+    <textarea id="subject" name="texto" placeholder="Texto.." style="height:200px" ></textarea>
+    <input type="submit" value="Submit">
+    </form>
+  </div> 
+  {% endif%}
 
 </body>
 </html>

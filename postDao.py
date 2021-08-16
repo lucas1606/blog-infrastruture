@@ -12,7 +12,7 @@ SQL_SELECT_POSTS = "SELECT * FROM post;"
 SQL_UPDATE_POST = '''UPDATE post SET
                      titulo = '{}',
                      texto = '{}',
-                     imagem = '{}',
+                     imagem = '{}'
                      WHERE id = {};
                      '''
 

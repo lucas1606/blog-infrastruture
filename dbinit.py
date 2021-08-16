@@ -3,7 +3,6 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from posts import post_list
 
-
 user = os.environ['user_db']
 pswd = os.environ['password']
 
