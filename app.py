@@ -49,8 +49,10 @@ def admin_page():
 def post_crud(post_id):
     if request.method == 'DELETE':
         postDao.delete_post(post_id)
+        return render_template('admin_page.html', post_list = admin_page)
 
-    if request.method == 'UPDATE':
+    if request.method == 'POST':
+        pass
         
 
 
