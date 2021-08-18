@@ -1,16 +1,26 @@
-from flask import Flask, render_template, session, request, redirect
+from flask import Flask, render_template, session, request, redirect, flash, abort
 from flask.helpers import url_for
 from flask.wrappers import Request
+from flask_login.utils import login_required
 from postDao import PostDao
-from models import Post
+from userDao import UsuarioDao
+from models import Post, Usuario
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 import os
 app = Flask(__name__)
-user = 'admin'
-password = 'admin'
+app.secret_key = '{}'.format(os.urandom(20))
 postDao = PostDao()
-#user routes
+usuarioDao = UsuarioDao()
+login_manager = LoginManager()
+login_manager.init_app(app)
 
+
+
+#user routes
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario(user_id)
 @app.route('/')
 def home_page():
     home_page_posts = []
@@ -31,12 +41,29 @@ def show_post(post_id):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if (request.form["user"] == user and request.form["psw"] == password):
-        return redirect(url_for('admin_page'))
-    else:
-        return redirect(url_for('home_page'))
+    nome = request.form["user"]
+    senha = request.form["psw"]
+    user_id = usuarioDao.select_user_id(nome)
+    if user_id:
+        print('tem usuário')
+        if usuarioDao.select_password_from_user(nome) == senha:
+            print("senha é correta")
+            user = Usuario(user_id)
+            user.nome = nome
+            user.senha = senha
+            login_user(user)
+            flash('Logged in successfully.')
+            return redirect(url_for('admin_page', user = user))
+    return redirect(url_for('home_page'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home_page'))
 
 @app.route('/admin')
+@login_required
 def admin_page():
     admin_page = []
     post_array= postDao.select_posts(3)
@@ -44,9 +71,10 @@ def admin_page():
         post = Post(post[1] ,post[2], post[3], post[4], post[0])
         admin_page.append(post)
 
-    return render_template('admin_page.html', post_list = admin_page)
+    return render_template('admin_page.html', post_list = admin_page, user = current_user)
 
 @app.route('/admin/<string:action>/<int:post_id>', methods=['POST', 'GET'])
+@login_required
 def post_crud(action=None ,post_id=None):
     if action == 'delete':
         post = postDao.select_post_by_id(post_id)
@@ -61,6 +89,7 @@ def post_crud(action=None ,post_id=None):
 
 @app.route('/admin/editor/', methods=['POST', 'GET'])
 @app.route('/admin/editor/<int:post_id>',  methods=['POST', 'GET'])
+@login_required
 def post_editor(post_id = None):
     if request.method == 'GET':
         if post_id == None:

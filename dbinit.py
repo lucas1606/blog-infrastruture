@@ -24,6 +24,11 @@ SQL_CREATE_TABLE = '''
                 titulo VARCHAR(100) NOT NULL,
                 texto TEXT,
                 imagem VARCHAR(100));
+
+CREATE TABLE IF NOT EXISTS usuario(
+id SERIAL PRIMARY KEY,
+nome VARCHAR(100) UNIQUE NOT NULL,
+senha VARCHAR(30) NOT NULL);
                 '''
 SQL_FIRST_INSERTION =f'''
                 INSERT INTO post(titulo, texto, imagem)
@@ -48,7 +53,6 @@ def check_if_db_exists():
         finally:
             con.close()
             cur.close()
-        execute_db(SQL_CREATE_TABLE)
         execute_db(SQL_CREATE_TABLE)
         execute_db(SQL_FIRST_INSERTION)
 

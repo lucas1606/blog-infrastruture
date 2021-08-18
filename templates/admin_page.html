@@ -8,7 +8,9 @@
 
 </head>
 <body>
+  <p>Logged as {{user.nome}}</p>
     <a href="{{url_for('post_crud', action = 'new', post_id = 98797)}}" type="button">Novo Post</a>
+    <a href="{{url_for('logout')}}" type="button">Log_out</a>
 <div class="main">
     {% for post in post_list %}
     <h2>{{ post.titulo }}</h2>
